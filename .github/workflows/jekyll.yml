@@ -50,7 +50,7 @@ jobs:
         with:
           enablement: true
       - name: Build with Jekyll
-        # Outputs to the './_site' directory by default; fall back to the project page baseurl if Pages is not yet enabled
+        # Outputs to the './_site' directory by default; fall back to the project page baseurl before Pages is enabled
         run: bundle exec jekyll build --baseurl "${BASE_PATH:-/LJT-Homepage}"
         env:
           JEKYLL_ENV: production
@@ -59,6 +59,8 @@ jobs:
         uses: actions/upload-pages-artifact@v5.0.0
 
   # Deployment job
+  # NOTE: the repository's GitHub Pages site must be enabled once under
+  # Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
   deploy:
     environment:
       name: github-pages
@@ -69,6 +71,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
-        # Before GitHub Pages is enabled once in repository Settings (source: GitHub Actions)
-        # the deployment step is allowed to fail; the build artifact is still produced.
-        continue-on-error: true
