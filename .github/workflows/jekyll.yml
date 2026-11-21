@@ -69,3 +69,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        # Before GitHub Pages is enabled once in repository Settings (source: GitHub Actions)
+        # the deployment step is allowed to fail; the build artifact is still produced.
+        continue-on-error: true
